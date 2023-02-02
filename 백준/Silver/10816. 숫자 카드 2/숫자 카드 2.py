@@ -1,11 +1,12 @@
-from bisect import bisect_left, bisect_right
+# 2. count 사용
+from collections import Counter
 
 n = int(input())
 cards = list(map(int, input().split()))
 m = int(input())
 nums = list(map(int, input().split()))
 
-cards.sort()
+cards = dict(Counter(cards))
 
 for num in nums:
-    print(bisect_right(cards, num) - bisect_left(cards, num), end=" ")
+    print(cards.get(num, 0), end=" ")

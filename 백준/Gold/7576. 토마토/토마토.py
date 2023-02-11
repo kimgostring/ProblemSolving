@@ -6,7 +6,7 @@ input = sys.stdin.readline
 m, n = map(int, input().split())
 
 arr = [0] * n
-dirrection = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+direction = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 totalCnt = 0  # 0이 아닌 경우(익은 토마토 혹은 빈 공간)의 개수
 roots = deque()  # 탐색에 사용됨
 
@@ -23,21 +23,20 @@ for i in range(n):
 result = 0
 while totalCnt < n * m:
     cnt = 0
-    newRoots = deque()
 
-    for root in roots:
-        i, j = root
+    for i in range(len(roots)):
+        x, y = roots.popleft()
 
         # 익은 토마토, 옆의 안 익은 애들을 익힐 수 있음
-        for k in range(4):
-            nowX, nowY = dirrection[k][0] + \
-                i, dirrection[k][1] + j
+        for j in range(4):
+            nowX, nowY = direction[j][0] + \
+                x, direction[j][1] + y
 
             if nowX < 0 or nowY < 0 or nowX >= n or nowY >= m:
                 continue
             elif arr[nowX][nowY] == 0:
                 arr[nowX][nowY] = 1
-                newRoots.append([nowX, nowY])
+                roots.append([nowX, nowY])
                 cnt += 1
 
     if cnt == 0:
@@ -47,7 +46,5 @@ while totalCnt < n * m:
 
     totalCnt += cnt
     result += 1
-
-    roots = newRoots
 
 print(result)

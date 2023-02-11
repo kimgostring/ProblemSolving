@@ -5,46 +5,38 @@ input = sys.stdin.readline
 
 m, n = map(int, input().split())
 
-arr = [0] * n
 direction = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-totalCnt = 0  # 0이 아닌 경우(익은 토마토 혹은 빈 공간)의 개수
-roots = deque()  # 탐색에 사용됨
+queue = deque()  # 탐색에 사용됨
 
+arr = [0] * n
 for i in range(n):
     arr[i] = list(map(int, input().split()))
 
     for j in range(m):
         if arr[i][j] == 1:
-            roots.append([i, j])
-            totalCnt += 1
-        elif arr[i][j] == -1:
-            totalCnt += 1
+            queue.append([i, j])
 
-result = 0
-while totalCnt < n * m:
-    cnt = 0
-
-    for i in range(len(roots)):
-        x, y = roots.popleft()
+result = -1  # 토마토가 하나 이상 있는 경우만 주어지므로
+while queue:
+    for _ in range(len(queue)):
+        x, y = queue.popleft()
 
         # 익은 토마토, 옆의 안 익은 애들을 익힐 수 있음
-        for j in range(4):
-            nowX, nowY = direction[j][0] + \
-                x, direction[j][1] + y
+        for dx, dy in direction:
+            nowX, nowY = dx + x, dy + y
 
             if nowX < 0 or nowY < 0 or nowX >= n or nowY >= m:
                 continue
             elif arr[nowX][nowY] == 0:
                 arr[nowX][nowY] = 1
-                roots.append([nowX, nowY])
-                cnt += 1
+                queue.append([nowX, nowY])
 
-    if cnt == 0:
-        # 더 이상 토마토가 익을 수 없음
-        result = -1
-        break
-
-    totalCnt += cnt
     result += 1
+
+for i in range(n):
+    for j in range(m):
+        if arr[i][j] == 0:
+            result = -1
+            break
 
 print(result)

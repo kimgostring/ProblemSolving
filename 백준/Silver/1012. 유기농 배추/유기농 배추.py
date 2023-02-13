@@ -24,19 +24,16 @@ for _ in range(t):
     m, n, k = map(int, input().split())
 
     arr = [[0] * (m + 2) for _ in range(n + 2)]
-    roots = [0] * k
 
     for i in range(k):
         x, y = map(int, input().split())
-        x += 1
-        y += 1
 
-        arr[y][x] = 1
-        roots[i] = (x, y)
+        arr[y + 1][x + 1] = 1
 
-    for x, y in roots:
-        if arr[y][x] == 1:
-            bfs(arr, x, y)
-            result += 1
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if arr[j][i] == 1:
+                bfs(arr, i, j)
+                result += 1
 
     print(result)

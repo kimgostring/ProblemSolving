@@ -1,5 +1,5 @@
-# BOJ
+# CodingTest
 
-### https://github.com/tony9402/baekjoon 및 기타 문제들 꾸준히 풀기
-- ⏰ **기간** : 01/02 ~ 
-- ✏ **노션 링크** : https://kimgostring.notion.site/16532abcca2042bea311881393355876?v=41373bca6fc644e2b7949eb9159d8992
+### 코딩 테스트 문제 꾸준히 풀기
+- ⏰ **기간** : 2023/01/02 ~ 
+- ✏ **공부** : 블로그 포스팅

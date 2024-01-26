@@ -16,10 +16,10 @@ function solution(arr) {
             for (let i = 0; i < n; i++) { // i번째 연산자를 이전 계산 결과들을 이용해 계산
                 if (arr[(k + i) * 2 + 1] === "+") {
                     max.push(dp_max[i][k] + dp_max[n - i - 1][k + i + 1]);
-                    min.push(dp_min[i]?.[k] + dp_min[n - i - 1]?.[k + i + 1]);
+                    min.push(dp_min[i][k] + dp_min[n - i - 1][k + i + 1]);
                 } else { // -
-                    max.push(dp_max[i][k] - dp_min[n - i - 1]?.[k + i + 1]);
-                    min.push(dp_min[i]?.[k] - dp_max[n - i - 1][k + i + 1]);
+                    max.push(dp_max[i][k] - dp_min[n - i - 1][k + i + 1]);
+                    min.push(dp_min[i][k] - dp_max[n - i - 1][k + i + 1]);
                 }
             }
             

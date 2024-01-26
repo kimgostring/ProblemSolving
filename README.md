@@ -1,5 +1,6 @@
-# CodingTest
+# Problem Solving
 
-### 코딩 테스트 문제 꾸준히 풀기
-- ⏰ **기간** : 2023/01/02 ~ 
-- ✏ **공부** : 블로그 포스팅
+### 📝 풀이 문제집
+- https://github.com/tony9402/baekjoon
+- https://solved.ac/class
+- https://school.programmers.co.kr/learn/challenges?order=recent&statuses=solving

@@ -9,6 +9,7 @@ function solution(number, k) {
         let nextInd = i;
         for (let j = i; j < i + k + 1; j++) {
             if (number[j] > number[nextInd]) nextInd = j;
+            if (number[nextInd] === 9) break;
             if (j === LEN - 1) break;
         }
         

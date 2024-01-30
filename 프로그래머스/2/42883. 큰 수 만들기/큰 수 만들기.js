@@ -1,33 +1,21 @@
 function solution(number, k) {
     const LEN = number.length;
-    number = number.split("").map((val) => Number(val));
+    number = number.split("").map((val, ind) => Number(val));
 
-    let answer = Array(LEN - k);
+    const stack = [];
     let i = 0;
-    let cnt = 0;
     while (i < LEN && k > 0) {
-        let nextInd = i;
-        for (let j = i; j < i + k + 1; j++) {
-            if (number[j] > number[nextInd]) nextInd = j;
-            if (number[nextInd] === 9) break;
-            if (j === LEN - 1) break;
+        while (stack.length 
+               && stack[stack.length - 1] < number[i]
+               && k) {
+            stack.pop();
+            k--;
         }
         
-        if (nextInd !== i) {
-            k -= (nextInd - i);
-            answer[cnt] = number[nextInd];
-            i = nextInd + 1;
-        } else {
-            if (i + k + 1 > LEN) break;
-            else {
-                answer[cnt] = number[i];
-                i++;
-            }
-        }
-        
-        cnt++;
+        stack.push(number[i]);        
+        i++;
     }    
     
-    answer = answer.concat(number.slice(i, LEN - k));
+    const answer = stack.concat(number.slice(i)).slice(0, LEN - k);
     return answer.join("");
 }

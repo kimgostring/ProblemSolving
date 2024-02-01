@@ -37,8 +37,8 @@ class Forest {
         const rootB = this.find(b);
         if (rootA === rootB) return false;
 
-        if (this.ranks[rootA] < this.ranks[rootB]) this.roots[rootB] = rootA;
-        else if (this.ranks[rootA] > this.ranks[rootB]) this.roots[rootA] = rootB;
+        if (this.ranks[rootA] < this.ranks[rootB]) this.roots[rootA] = rootB;
+        else if (this.ranks[rootA] > this.ranks[rootB]) this.roots[rootB] = rootA;
         else { // 임의로 붙이고, rank + 1
             this.roots[rootB] = rootA;
             this.ranks[rootB]++;

@@ -33,8 +33,8 @@ class MinHeap {
         
         let now = this.size - 1;
         while (1) {
-            const parent = Math.floor(now / 2);
-            if (parent === now || this._[parent] <= this._[now]) break;
+            const parent = Math.floor((now - 1) / 2); 
+            if (parent < 0 || this._[parent] <= this._[now]) break;
             else {
                 // swap
                 const temp = this._[now];
@@ -52,19 +52,17 @@ class MinHeap {
         let now = 0;
         this._[0] = this._[--this.size];
         while (1) {
-            const left = now * 2;
-            const right = left + 1;
-            let selected = this._[left] < this._[right] ? left : right;
-            
-            if (selected >= this.size || this._[selected] >= this._[now]) break; 
+            let child = now * 2 + 1;
+            if (child + 1 < this.size && this._[child] > this._[child + 1]) child++;
+            if (child >= this.size || this._[child] >= this._[now]) break; 
             else {
                 // swap
                 const temp = this._[now];
-                this._[now] = this._[selected];
-                this._[selected] = temp;
+                this._[now] = this._[child];
+                this._[child] = temp;
             } 
             
-            now = selected;
+            now = child;
         }
         
         return root;

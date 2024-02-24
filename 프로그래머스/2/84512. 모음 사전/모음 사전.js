@@ -4,16 +4,10 @@ function solution(word) {
         if (cur === "A") return acc;
         
         let now = 1;
-        if (ind !== 4) {
-            for (let i = 4 - ind; i > 0; i--) now += 5 ** i;
-            if (cur === "I") now *= 2;
-            else if (cur === "O") now *= 3;
-            else if (cur === "U") now *= 4;
-        } else {
-            if (cur === "I") now += 1;
-            else if (cur === "O") now += 2;
-            else if (cur === "U") now += 3;
-        }
+        now += (((5 ** (5 - ind)) - 1) >> 2) - 1; // 등비수열의 합 - 1
+        if (cur === "I") now = now << 1;
+        else if (cur === "O") now *= 3;
+        else if (cur === "U") now = now << 2;
         
         return acc + now;
     }, 0);

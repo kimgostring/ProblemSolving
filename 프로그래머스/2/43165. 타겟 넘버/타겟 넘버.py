@@ -5,7 +5,7 @@ def solution(numbers, target):
     answer = 0;
     
     h = deque([(1, -numbers[0]), (1, numbers[0])]);
-    while len(h):
+    while h:
         now = h.popleft();
         
         if now[0] == LEN:

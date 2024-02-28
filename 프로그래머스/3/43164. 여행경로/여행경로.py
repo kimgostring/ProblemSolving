@@ -1,36 +1,47 @@
-from bisect import bisect_right
+import copy
 
 def solution(tickets):
-    sortedTickets = sorted(tickets, key=lambda x: (x[0], x[1]));
-    starts, ends = list(zip(*sortedTickets));
+    LEN = len(tickets);
     
-    return dfs("ICN", starts, ends);
+    edges = dict();
+    used = dict();
+    for ticket in tickets:
+        start, end = ticket;
+        if start in edges:
+            edges[start].append(end);
+            if end in used[start]:
+                used[start][end] += 1;
+            else:
+                used[start][end] = 1;
+        else:
+            edges[start] = [end];
+            used[start] = {end: 1};
 
-def dfs(start, starts, ends):
-    LEN = len(starts);
-    # (now, index of tickets, answer, used) 
-    q = [(start, LEN, [start], [False for _ in range(LEN + 1)])];
+    for start in edges.keys():
+        edges[start].sort(reverse=True);
 
+    return dfs("ICN", LEN, edges, used);
+
+def dfs(start, LEN, edges, used):
+    q = [(-1, start, [], used)];
+    
     while q:
-        now, index, answer, used = q.pop();
+        prev, now, answer, visited = q.pop();
         
-        # 방문 처리
-        if used[index]:
-            continue; 
-        used[index] = True;
+        if prev != -1 and visited[prev][now] <= 0:
+            continue;
         
-        # 종료 조건 (정답 찾음)
-        if len(answer) == LEN + 1: 
+        answer.append(now);
+        if prev != -1:
+            visited[prev][now] -= 1;
+    
+        if len(answer) == LEN + 1: # 종료조건
             return answer;
-    
-        # 큰 알파벳 순으로 stack에 넣어야, 가장 작은 값부터 탑색 가능
-        i = bisect_right(starts, now) - 1;
-        while i < LEN and starts[i] == now:
-            if not used[i]:
-                next = ends[i];
-                nextUsed = used[:];
+        
+        if now in edges:
+            for next in edges[now]:
+                if visited[now][next] <= 0:
+                    continue;
 
-                q.append((next, i, answer + [next], nextUsed));
-            i -= 1;
-            
-    
+                nextVisited = copy.deepcopy(visited);
+                q.append((now, next, answer[:], nextVisited));

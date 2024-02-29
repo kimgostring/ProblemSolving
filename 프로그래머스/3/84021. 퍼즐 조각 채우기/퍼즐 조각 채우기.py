@@ -33,7 +33,6 @@ def putBlocks(board, blanks):
                     if block in blanks:
                         board = visited;
                         blanks.remove(block);
-                        print(len(block))
                         answer += len(block);
                             
         # board를 회전시켜서 확인

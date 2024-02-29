@@ -2,7 +2,6 @@ from collections import deque
 import copy
 
 def solution(game_board, table):
-    rotate(table)
     blanks = findBlanks(game_board);
     return putBlocks(table, blanks);
 
@@ -14,7 +13,7 @@ def findBlanks(board):
     for i in range(LEN):
         for j in range(LEN):
             if not board[i][j]:
-                blank, visited = bfs(board, j, i);
+                blank, size, visited = bfs(board, j, i);
                 board = visited;
                 blanks.append(blank);
             
@@ -24,20 +23,23 @@ def putBlocks(board, blanks):
     LEN = len(board);
     answer = 0;
 
-    for rotationCnt in range(4):
-        for i in range(LEN):
-            for j in range(LEN):
-                if board[i][j]:
-                    block, visited = bfs(board, j, i, findKey=1);
-                    
+    for i in range(LEN):
+        for j in range(LEN):
+            if board[i][j]:
+                block, size, visited = bfs(board, j, i, findKey=1);
+                board = visited;
+
+                for r in range(4):
+                    # block이 blanks와 일치하는지 확인
                     if block in blanks:
-                        board = visited;
                         blanks.remove(block);
-                        answer += len(block);
-                            
-        # board를 회전시켜서 확인
-        if rotationCnt != 3:
-            board = rotate(board);
+                        answer += size;
+                        
+                        break;
+                    
+                    # block을 회전시켜서 확인
+                    if r != 3:
+                        block = rotate(block);
             
     return answer;
     
@@ -52,7 +54,7 @@ def bfs(board, startX, startY, findKey=0):
     
     while q:
         x, y = q.popleft();
-        answer.append((x - startX, y - startY));
+        answer.append((x, y));
         
         for i in range(4):
             dx, dy = DIR[i];
@@ -67,12 +69,17 @@ def bfs(board, startX, startY, findKey=0):
             visited[nextY][nextX] = 1 if findKey == 0 else 0;
             q.append((nextX, nextY));
         
-    return answer, visited;
+    # minX, minY를 0으로 보정
+    minX, minY = map(min, zip(*answer)); 
+    maxX, maxY = map(max, zip(*answer));
+    block = [[0] * (maxX - minX + 1) for _ in range(maxY - minY + 1)];
+    for x, y in answer:
+        block[y - minY][x - minX] = 1;
+    
+    return block, len(answer), visited;
     
 # 반시계방향 회전
-def rotate(board): 
-    rotatedBoard = list(map(list, zip(*board)));
-    rotatedBoard.reverse();
-    return rotatedBoard;
-    
-    
+def rotate(block): 
+    rotatedBlock = list(map(list, zip(*block)));
+    rotatedBlock.reverse();
+    return rotatedBlock;

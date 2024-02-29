@@ -13,8 +13,7 @@ def findBlanks(board):
     for i in range(LEN):
         for j in range(LEN):
             if not board[i][j]:
-                blank, size, visited = bfs(board, j, i);
-                board = visited;
+                blank, size = bfs(board, j, i);
                 blanks.append(blank);
             
     return blanks;
@@ -26,8 +25,7 @@ def putBlocks(board, blanks):
     for i in range(LEN):
         for j in range(LEN):
             if board[i][j]:
-                block, size, visited = bfs(board, j, i, findKey=1);
-                board = visited;
+                block, size = bfs(board, j, i, findKey=1);
 
                 for r in range(4):
                     # block이 blanks와 일치하는지 확인
@@ -43,13 +41,12 @@ def putBlocks(board, blanks):
             
     return answer;
     
-def bfs(board, startX, startY, findKey=0):
-    LEN = len(board);
+def bfs(visited, startX, startY, findKey=0):
+    LEN = len(visited);
     DIR = [(1, 0), (-1, 0), (0, 1), (0, -1)];
     
     answer = [];
     q = deque([(startX, startY)]);
-    visited = copy.deepcopy(board);
     visited[startY][startX] = 1 if findKey == 0 else 0;
     
     while q:
@@ -76,7 +73,7 @@ def bfs(board, startX, startY, findKey=0):
     for x, y in answer:
         block[y - minY][x - minX] = 1;
     
-    return block, len(answer), visited;
+    return block, len(answer);
     
 # 반시계방향 회전
 def rotate(block): 

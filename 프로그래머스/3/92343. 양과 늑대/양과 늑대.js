@@ -15,9 +15,9 @@ function dfs(now, nexts, cnt, info, graph) {
     let answer = cnt[0];
     nexts = [...nexts, ...graph[now]];
     nexts.forEach((next, ind) => {
-        const temp = dfs(next, nexts.slice(ind + 1), [...cnt], info, graph);
+        const newNexts = [...nexts.slice(0, ind), ...nexts.slice(ind + 1)];
+        const temp = dfs(next, newNexts, [...cnt], info, graph);
         if (temp > answer) answer = temp;
-        nexts.push(next);
     });
     
     return answer;

@@ -1,5 +1,3 @@
-import copy;
-
 n = int(input());
 arr = [];
 biggest = 0;
@@ -31,11 +29,13 @@ def rotate(arr, d):
 def move(arr, d):
     global biggest;
     new = rotate(arr, d);
+    cntNum = 0;
+    isChanged = False;
     
     for i in range(n):
+        orig = new[i][:];
         new[i] = [x for x in new[i] if x != 0];
         
-    for i in range(n):
         l = len(new[i]);
         j = 0;
         tmp = [];
@@ -48,18 +48,22 @@ def move(arr, d):
             else:
                 tmp.append(new[i][j]);
                 j += 1;
-            
+        
         new[i] = tmp + [0] * (n - len(tmp));
-    
-    return new;
+        cntNum += len(tmp);
+        isChanged = isChanged or orig != new[i];
+            
+    hasPossibility = cntNum > 1 and isChanged;
+    return new, hasPossibility;
 
 def backtracking(arr, moveCnt):
     if moveCnt == 5:
         return;
     
     for d in range(4):
-        tmp = move(arr, d);
-        backtracking(tmp, moveCnt + 1);
+        new, hasPossibility = move(arr, d);
+        if hasPossibility:
+            backtracking(new, moveCnt + 1);
     
 backtracking(arr, 0);
 print(biggest);

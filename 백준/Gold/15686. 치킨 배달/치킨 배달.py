@@ -1,5 +1,3 @@
-from itertools import combinations;
-
 n, m = map(int, input().split());
 homes = [];
 chickens = [];
@@ -18,9 +16,14 @@ for cx, cy in chickens:
         tmp.append(abs(hx - cx) + abs(hy - cy));
     chickenD.append(tmp);
     
-answer = 10e6;
-for selectedI in list(combinations(range(len(chickens)), m)):
-    selectedChickenD = [d for i, d in enumerate(chickenD) if i in selectedI];
-    answer = min(answer, sum(map(min, zip(*selectedChickenD))));
+
+def combinations(now, cnt, selected):
+    if cnt == 0:
+        selectedChickenD = [d for i, d in enumerate(chickenD) if i in selected];
+        return sum(map(min, zip(*selectedChickenD)));
+    elif now == -1:
+        return 10e6;
     
-print(answer);
+    return min(combinations(now - 1, cnt, selected), combinations(now - 1, cnt - 1, selected + [now]));
+        
+print(combinations(len(chickenD) - 1, m, []));

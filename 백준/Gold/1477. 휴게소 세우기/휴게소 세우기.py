@@ -26,6 +26,6 @@ while left <= right:
     else:
         # 개수가 같은 경우 중에서도 길이(mid)가 최소인 경우를 구해야 함 
         right = mid - 1;
-        answer = min(answer, mid);
+        answer = mid;
 
 print(answer);

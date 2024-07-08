@@ -8,7 +8,7 @@ for i in range(2, n + 1):
     
     if i >= m:
         answer.append(i);
-    for j in range(i * 2, n + 1, i):
+    for j in range(i * i, n + 1, i):
         arr[j] = False;
     
 print(*answer, sep="\n");

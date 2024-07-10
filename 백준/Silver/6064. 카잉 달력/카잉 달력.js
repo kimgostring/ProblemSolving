@@ -17,19 +17,15 @@ const lcm = (a, b) => a / gcd(a, b) * b;
 let answers = "";
 for (const l of ls) {
     let [m, n, x, y] = l;
-    if (!(m % n)) [m, n, x, y] = [n, m, y, x];
-
-    if (m === x && n === y) {
-        answers += `${lcm(m, n)}\n`;
-        continue;
-    } 
-
-    const remain = x === m ? 0 : x;
+    if (m < n) [m, n, x, y] = [n, m, y, x];
+    if (x === m) x = 0;
+    if (y === n) y = 0;
+    
     let answer = -1;
-    for (let i = 0; i < lcm(m, n); i += n) {
-        const year = i + y;
-        if (year % m === remain) {
-            answer = year;
+    const lastYear = lcm(m, n);
+    for (let i = x || m; i <= lastYear; i += m) {
+        if (i % n === y) {
+            answer = i;
             break;
         }
     }

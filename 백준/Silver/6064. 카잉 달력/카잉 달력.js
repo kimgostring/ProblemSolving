@@ -17,7 +17,7 @@ const lcm = (a, b) => a / gcd(a, b) * b;
 let answers = "";
 for (const l of ls) {
     let [m, n, x, y] = l;
-    if (m < n) [m, n, x, y] = [n, m, y, x];
+    if (!(m % n)) [m, n, x, y] = [n, m, y, x];
 
     if (m === x && n === y) {
         answers += `${lcm(m, n)}\n`;

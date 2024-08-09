@@ -7,7 +7,6 @@ edges = sorted((list(inputInts()) for _ in range(E)), key=lambda x: x[2])
 class UnionFind:
     def __init__(self, V):
         self.parents = [i for i in range(V + 1)]
-        self.res = [[0, 0] for _ in range(V + 1)] # weights, size
 
     def find(self, a):
         shouldUpdated = []
@@ -19,24 +18,23 @@ class UnionFind:
             
         return a
 
-    def union(self, a, b, w):    
+    def union(self, a, b):    
         pa, pb = self.find(a), self.find(b)
-        if pa == pb: return self.res[pa]
+        if pa == pb: return False
         elif pa > pb: a, pa, b, pb = b, pb, a, pa
         
         # pa < pb
-        self.res[pb] = list(map(sum, zip(self.res[pa], self.res[pb], [w, 1])))
-        self.res[pa] = self.res[pb]
-        
         self.parents[pb] = pa
         self.find(b)
         
-        return self.res[pa]
+        return True
 
 uf = UnionFind(V)
+tw, ts = 0, 0
 for a, b, w in edges:
-    tw, ts = uf.union(a, b, w)
-    
+    if uf.union(a, b):
+        tw += w
+        ts += 1
     if ts == V - 1:
         print(tw)
         break

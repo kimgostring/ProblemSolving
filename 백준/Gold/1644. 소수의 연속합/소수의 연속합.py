@@ -1,9 +1,11 @@
 n = int(input())
 
-
 # 1. 에라토스테네스의 체 -> n보다 작거나 같은 소수 구하기
 isPrime = [True] * (n + 1)
 for p in range(2, n + 1):
+    if not isPrime[p]:
+        continue
+    
     m = 2
     while p * m <= n:
         isPrime[p * m] = False

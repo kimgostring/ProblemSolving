@@ -15,18 +15,14 @@ for s, e, w in data:
 def dijkstra(edges, dest):
   # ans
   dist = [INF] * (N + 1)
-  
-  # 초기화 
   q = [(0, X)]
-  cnt = 0
-  
-  while cnt < N - 1:
+
+  while q:
     # 최소값 선택
     w, v = heappop(q)
     if dist[v] < w: # 이미 방문한 Node
       continue
     dist[v] = w
-    cnt += 1
     
     # dist 갱신
     for nextW, nextV in edges[v]:

@@ -1,4 +1,3 @@
-from collections import deque
 import sys
 input = sys.stdin.readline
 
@@ -17,14 +16,14 @@ for i in range(M):
         prev = now
 
 # 처음부터 inDegree = 0인 애들 queue에 넣기
-candidates = deque()
+candidates = []
 for i, inDegree in enumerate(inDegrees):
     if i != 0 and inDegree == 0:
         candidates.append(i)
 
 ans = []
 while candidates:
-    now = candidates.popleft()
+    now = candidates.pop()
     ans.append(now)
 
     for next in edges[now]:

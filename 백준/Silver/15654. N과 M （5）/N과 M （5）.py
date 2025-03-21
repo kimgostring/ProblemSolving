@@ -1,5 +1,5 @@
 n, m = map(int, input().split(" "))
-nums = list(map(int, input().split(" ")))
+nums = list(map(int, input().rstrip().split(" ")))
 nums.sort()
 
 def permutations(selected):
@@ -9,6 +9,8 @@ def permutations(selected):
   
   for i in nums:
     if i not in selected:
-      permutations([*selected, i])
+      selected.append(i)
+      permutations(selected)
+      selected.pop()
 
 permutations([])

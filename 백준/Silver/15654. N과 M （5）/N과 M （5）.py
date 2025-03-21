@@ -4,10 +4,10 @@ nums.sort()
 
 def permutations(selected):
   if len(selected) == m:
-    print(*(nums[i] for i in selected))
+    print(*selected)
     return
   
-  for i in range(n):
+  for i in nums:
     if i not in selected:
       permutations([*selected, i])
 

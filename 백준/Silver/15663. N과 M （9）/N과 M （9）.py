@@ -1,26 +1,27 @@
-from collections import Counter
-
 n, m = map(int, input().split(" "))
-arr = map(int, input().split(" "))
-
-cnt = Counter(arr)
-arr = sorted(list(cnt.keys()))
-visited = dict(((k, 0) for k in arr))
+arr = list(map(int, input().split(" ")))
+arr.sort()
 
 ans = []
+ansSet = set()
+visited = [False] * n
 def permutations(selected = []):  
     if len(selected) == m:
-        ans.append(" ".join(map(str, selected)))
+        now = " ".join(map(str, selected))
+        
+        if now not in ansSet:
+            ans.append(now)
+            ansSet.add(now)
 
-    for num in arr:
-        if visited[num] >= cnt[num]:
+    for i in range(n):
+        if visited[i]:
             continue
 
-        selected.append(num)
-        visited[num] += 1
+        selected.append(arr[i])
+        visited[i] = True
         permutations(selected)
         selected.pop()
-        visited[num] -= 1
+        visited[i] = False
 
 permutations()
 print(*ans, sep="\n")

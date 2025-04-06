@@ -2,21 +2,17 @@ n, m = map(int, input().split(" "))
 arr = list(map(int, input().split(" ")))
 arr.sort()
 
-ans = []
-ansSet = set()
 visited = [False] * n
 def permutations(selected = []):  
     if len(selected) == m:
-        now = " ".join(map(str, selected))
-        
-        if now not in ansSet:
-            ans.append(now)
-            ansSet.add(now)
+        print(" ".join(map(str, selected)))
 
+    prev = 0
     for i in range(n):
-        if visited[i]:
+        if visited[i] or arr[i] == prev:
             continue
 
+        prev = arr[i]
         selected.append(arr[i])
         visited[i] = True
         permutations(selected)
@@ -24,4 +20,3 @@ def permutations(selected = []):
         visited[i] = False
 
 permutations()
-print(*ans, sep="\n")

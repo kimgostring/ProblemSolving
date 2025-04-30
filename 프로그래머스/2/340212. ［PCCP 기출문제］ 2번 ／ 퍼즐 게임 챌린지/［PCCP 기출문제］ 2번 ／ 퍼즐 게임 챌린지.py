@@ -12,17 +12,15 @@ def solution(diffs, times, limit):
         return tot_time
     
     # parametric_search
-    ans = -1
     start = 1
-    end = 100001 # 포함 X
+    end = max(diffs)
     while start < end:
         mid = (start + end) // 2
         tot_time = calc_tot_time(mid)
         
         if tot_time <= limit:
-            ans = mid
             end = mid
         else: # 해결 불가 
             start = mid + 1
-            
-    return ans
+    
+    return end

@@ -1,16 +1,12 @@
 import sys
 input = sys.stdin.readline
 
-# constant
-INF = 10005
-
 # global
 n = 0
 edges = []
 
 def can_go_back_to_the_past(s):
-    time = [INF] * (n + 1)
-    time[s] = 0
+    time = [0] * (n + 1)
 
     for i in range(n):
         for s, e, t in edges:
@@ -33,4 +29,5 @@ for _ in range(tc):
         s, e, t = map(int, input().rstrip().split(" "))
         edges.append((s, e, -t))
 
-    print("YES" if can_go_back_to_the_past(1) else "NO")
+    # 가상의 정점 0에서 출발, 모든 정점과 연결되어 있음
+    print("YES" if can_go_back_to_the_past(0) else "NO")
